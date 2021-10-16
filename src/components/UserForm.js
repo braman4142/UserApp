@@ -1,50 +1,58 @@
-
 import React, { useState } from "react";
+import {Col} from "react-bootstrap";
+import { v4 as uuid } from "uuid";
+import {connect} from "react-redux";
+import {addUser} from "../actions/userActions";
+
 
 function UserForm(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [gen, setGen] = useState("");
+  const [gen, setGen] = useState("")
 
   function handleSubmit(e) {
+    e.preventDefault();
 
-    e.preventDefault()
-    let user = {
-      name: name,
-      email: email,
-      gen: gen,
-    };
+    if (email && name && gen) {
+      let newUser = {
+        name: name,
+        email: email,
+        gen:  gen,
+        
+        id: uuid(),
+      };
 
-    props.addUser(user);
+      props.addNewUser(newUser);
 
-    
-    setName("");
-    setEmail("");
-    setGen ("");
+      setName("");
+      setEmail("");
+      setGen("");
+    }
   }
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <input
         type="text"
-        name="fullname"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <input
         type="email"
-        name="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-       <input
+<input
         type="gen"
-        name="gen"
         value={gen}
         onChange={(e) => setGen(e.target.value)}
       />
-      <input type="submit" />
+     <input type="submit" />
     </form>
   );
 }
-export default UserForm;
+const mapDispatchToProps ={
+  addNewUser:addUser
+}
+
+export default connect(null, mapDispatchToProps)(UserForm);

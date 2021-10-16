@@ -1,25 +1,30 @@
+import React, { useState } from "react";
+import User from "./User";
+import { Modal, Button } from "react-bootstrap";
+import {connect} from "react-redux";
 
-import React from "react";
 
 function UserList(props) {
-
-  const users = props.data;
-
   return (
     <div>
-      {
-        
-        users.map((user, index) => {
-          return (
-            <div key={index}>
-              <h1>{user.name}</h1>
-              <h3>{user.email}</h3>
-              <h4>{user.gen}</h4>
-            </div>
-          );
-        })
-      }
+      {props.users.map((user) => {
+      
+        return (
+          <User
+            user={user}
+            key={user.id}
+            deleteUser={props.deleteUser}
+            editUser={props.editUser}
+          />
+        );
+      })}
     </div>
   );
 }
-export default UserList;
+const mapStateToProps= (state)=>{
+return {
+  users: state.users,
+};
+
+};
+export default connect(mapStateToProps)(UserList);
