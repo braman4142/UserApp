@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import EditUserForm from "./EditUserForm";
+import{ connect } from "react-redux";
+import {deleteUser} from "../actions/userActions";
+
 
 function User(props) {
   const user = props.user;
@@ -10,7 +13,6 @@ function User(props) {
 
   
   function toggleModal() {
-
     setShowModal(!showModal);
   }
 
@@ -19,8 +21,6 @@ function User(props) {
       <h1>{user.name}</h1>
       <h3>{user.email}</h3>
       <h4>{user.gen}</h4>
-
-
       <Button variant="primary" onClick={() => toggleModal()}>
         Edit
       </Button>
@@ -28,16 +28,16 @@ function User(props) {
         Delete
       </Button>
 
-      {/*Modal to edit user*/}
+    
       <Modal show={showModal} onHide={() => toggleModal()}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/*Component to edit user*/}
+        
           <EditUserForm
             user={user}
-            editUser={props.editUser}
+            // editUser={props.editUser}
             toggleModal={toggleModal}
           />
         </Modal.Body>
@@ -51,4 +51,9 @@ function User(props) {
   );
 }
 
-export default User;
+const mapDispatchToProps={
+  deleteUser,
+}
+
+
+export default connect(null, mapDispatchToProps)(User);
