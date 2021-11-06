@@ -1,11 +1,11 @@
-var initialState = {
+const initialState = {
     users: [
        
 
     ]
 }
 
- var UsersReducer=(state=initialState,action)=>{
+ const usersReducer=(state=initialState,action)=>{
      switch (action.type) {
          case "ADD_USER":
            return {...state,users: [...state.users,action.payload]}
@@ -30,9 +30,14 @@ case "EDIT_USER":
 
     
      
-     default:
-return state
-     }
+     
+
+    case "SET_ALL_USERS":
+			return { users: action.payload };
+
+		default:
+			return state;
+	}
 };
 
-export default UsersReducer;
+export default usersReducer;
